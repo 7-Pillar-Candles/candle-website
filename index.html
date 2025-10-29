@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 Pillar Candles - Handcrafted Artisan Candles</title>
+    <link rel="icon" type="image/png" href="favicon-16x16.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .scroll-top-btn {
+    /* Hidden by default */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+
+    /* Positioning */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999; /* Just below the lightbox, above everything else */
+
+    /* Styling - using your site's gradient! */
+    background: linear-gradient(135deg, #C9A88A, #8B7355);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Make it a circle */
+    text-decoration: none;
+    
+    /* Centering the arrow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.scroll-top-btn.visible {
+    /* This class is added by JavaScript to show it */
+    opacity: 1;
+    pointer-events: auto;
+}
+      .lightbox {
+    /* Hidden by default */
+    opacity: 0;
+    pointer-events: none;
+
+    /* Full-screen overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 999; /* On top of everything */
+
+    /* For centering the image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Smooth fade-in */
+    transition: opacity 0.3s ease;
+}
+
+.lightbox.open {
+    /* This class is added by JavaScript to show the lightbox */
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-content {
+    /* The big image */
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+#lightbox-close {
+    /* The 'X' close button */
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* --- Make product images clickable --- */
+.featured-image img,
+.candle-image img {
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+.featured-image img:hover,
+.candle-image img:hover {
+    transform: scale(1.05); /* Adds a nice little grow effect */
+}
+        body {
+            font-family: 'Georgia', serif;
+            background: #c0ac9a;
+            color: #4A4A4A;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Background Image Overlay */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><filter id="blur"><feGaussianBlur stdDeviation="3"/></filter></defs><rect fill="%23F5F5F5" width="1200" height="800"/><circle cx="200" cy="150" r="80" fill="%23E8DCC4" opacity="0.3" filter="url(%23blur)"/><circle cx="1000" cy="600" r="100" fill="%23D4B5A0" opacity="0.25" filter="url(%23blur)"/><circle cx="600" cy="400" r="120" fill="%23C9A88A" opacity="0.2" filter="url(%23blur)"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #C9A88A, #8B7355);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #C9A88A;
+        }
+        .mobile-menu-button {
+    display: none; /* Hidden on desktop */
+    font-size: 2rem;
+    color: #8B7355;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.nav-links.open {
+    display: flex;
+    position: absolute;
+    top: 100%; /* Positions it right below the nav bar */
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+        /* Hero Section */
+        .hero {
+            min-height: 110vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+           background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('images/gc2.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 20px 60px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #d7b285, #C9A88A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #e1d8d8;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #C9A88A, #8B7355);
+            color: white;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #8B7355, #6B5D47);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139,115,85,0.3);
+        }
+
+        /* Featured Section */
+        .featured {
+            padding: 80px 20px;
+            background: #e2dad2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, #8B7355, #C9A88A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .featured-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .featured-card {
+            background: #FAFAFA;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .featured-image {
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #E8DCC4, #F5EDE4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #C9A88A, #8B7355);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .featured-info {
+            padding: 25px;
+        }
+
+        .featured-info h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #2C2C2C;
+            margin-bottom: 8px;
+        }
+
+        .featured-info p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .featured-price {
+            font-size: 1.2rem;
+            color: #2C2C2C;
+            font-weight: 500;
+        }
+
+        /* Collection Section */
+        .collection {
+            padding: 80px 20px;
+            background: rgba(248,245,240,0.8);
+        }
+
+        .candle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .candle-card {
+            background: #FFFFFF;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .candle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .candle-image {
+            height: 280px;
+            background: linear-gradient(135deg, #E8DCC4, #F5EDE4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .candle-info {
+            padding: 20px;
+        }
+
+        .candle-info h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #2C2C2C;
+            margin-bottom: 8px;
+        }
+
+        .candle-info p {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .candle-price {
+            font-size: 1.1rem;
+            color: #2C2C2C;
+            font-weight: 500;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 20px;
+            background: #eadacc;
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #E8DCC4, #F5EDE4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(139,115,85,0.15);
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #8B7355, #C9A88A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 20px;
+            background: rgba(248,245,240,0.8);
+        }
+
+        .contact-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-card {
+            background: #FFFFFF;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #2C2C2C;
+            font-weight: 400;
+        }
+
+        .contact-card a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .contact-card a:hover {
+            color: #C9A88A;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #8B7355, #6B5D47);
+            color: #FFFFFF;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-content { grid-template-columns: 1fr; }
+            .candle-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links {
+        display: none; /* Hide links by default */
+        gap: 0; /* Remove old gap */
+    }
+
+    .nav-links a {
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-menu-button {
+        display: block; /* Show the hamburger button */
+    }
+}
+        .featured-image img,
+.candle-image img,
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* <-- CHANGE THIS LINE */
+}
+.animate-on-scroll {
+    /* "Before" state: hidden and moved down */
+    opacity: 0;
+    transform: translateY(30px); /* Starts 30px "down" */
+    
+    /* "After" state: This defines the animation speed */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    /* "After" state: visible and in its final position */
+    opacity: 1;
+    transform: translateY(0);
+}
+    </style>
+</head>
+<body>
+    <!-- Background Overlay -->
+    <div class="bg-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+    <div class="nav-content">
+        <div class="logo">7 PILLAR CANDLES</div>
+
+        <button class="mobile-menu-button">☰</button>
+
+        <div class="nav-links">
+            <a href="#featured">Featured</a>
+            <a href="#collection">Collection</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+</nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Handcrafted Candles</h1>
+            <p>Premium soy wax candles made with love in small batches. Each candle tells a story of craftsmanship and care.</p>
+            <a href="#collection" class="cta-button">EXPLORE COLLECTION</a>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+<section class="featured animate-on-scroll" id="featured">        <div class="section-header">
+            <h2 class="section-title">Featured Collection</h2>
+            <p class="section-subtitle">Our most loved creations</p>
+        </div>
+        <div class="featured-grid">
+            <div class="featured-card">
+                <div class="featured-image">
+                    <img src="images/bt2.jpg" alt="Bubble Tower">
+                    <div class="featured-badge">BESTSELLER</div>
+                </div>
+                <div class="featured-info">
+                    <h3>Bubble Tower</h3>
+                    <p>Calming lavender with vanilla undertones</p>
+                    <div class="featured-price">₹499</div>
+                </div>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-image">
+                   <img src="images/cp2.jpg" alt="Description">
+                    <div class="featured-badge">NEW</div>
+                </div>
+                <div class="featured-info">
+                    <h3>Cosmic Pillar</h3>
+                    <p>Fresh maritime scent with sea salt notes</p>
+                    <div class="featured-price">₹</div>
+                </div>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-image">
+                    <img src="images/sh.jpg" alt="Description">
+                    <div class="featured-badge">LIMITED</div>
+                </div>
+                <div class="featured-info">
+                    <h3>Sweet Home</h3>
+                    <p>Delicate rose petals with peony hints</p>
+                    <div class="featured-price">₹</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Section -->
+    <section class="collection animate-on-scroll" id="collection">
+        <div class="section-header">
+            <h2 class="section-title">Full Collection</h2>
+            <p class="section-subtitle">Discover all our handcrafted candles</p>
+        </div>
+        <div class="candle-grid">
+            <div class="candle-card">
+                <div class="candle-image">🕯️</div>
+                <div class="candle-info">
+                    <h3>Citrus Sunrise</h3>
+                    <p>Energizing blend of citrus fruits</p>
+                    <div class="candle-price">₹449</div>
+                </div>
+            </div>
+
+            <div class="candle-card">
+                <div class="candle-image">🕯️</div>
+                <div class="candle-info">
+                    <h3>Vanilla Comfort</h3>
+                    <p>Warm vanilla with caramel notes</p>
+                    <div class="candle-price">₹399</div>
+                </div>
+            </div>
+
+            <div class="candle-card">
+                <div class="candle-image">🕯️</div>
+                <div class="candle-info">
+                    <h3>Cinnamon Spice</h3>
+                    <p>Warm cinnamon with clove</p>
+                    <div class="candle-price">₹479</div>
+                </div>
+            </div>
+
+            <div class="candle-card">
+                <div class="candle-image">🕯️</div>
+                <div class="candle-info">
+                    <h3>Eucalyptus Mint</h3>
+                    <p>Refreshing eucalyptus and mint</p>
+                    <div class="candle-price">₹529</div>
+                </div>
+            </div>
+
+            <div class="candle-card">
+                <div class="candle-image">🕯️</div>
+                <div class="candle-info">
+                    <h3>Sandalwood Sage</h3>
+                    <p>Earthy sandalwood with sage</p>
+                    <div class="candle-price">₹579</div>
+                </div>
+            </div>
+
+            <div class="candle-card">
+                <div class="candle-image">🕯️</div>
+                <div class="candle-info">
+                    <h3>Jasmine Night</h3>
+                    <p>Sweet jasmine for evening calm</p>
+                    <div class="candle-price">₹519</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about animate-on-scroll" id="about">
+        <div class="section-header">
+            <h2 class="section-title">Our Story</h2>
+            <p class="section-subtitle">Handcrafted with care from our home studio</p>
+        </div>
+        <div class="about-content">
+            <div class="about-image">🏡</div>
+            <div class="about-text">
+                <h2>Made with Love</h2>
+                <p>Every candle from 7 Pillar Candles is carefully handcrafted in small batches. What began as a passion project has grown into a dedication to creating premium, aromatic experiences for your home.</p>
+                <p>We use only the finest soy wax, natural essential oils, and eco-friendly materials. Each candle is poured with intention, ensuring a clean burn and beautiful fragrance that transforms your space.</p>
+                <p>The name "7 Pillar" represents the seven pillars of wellness: physical, emotional, social, intellectual, spiritual, environmental, and occupational. May each candle bring light to your life.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-header">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We'd love to hear from you</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">💬</div>
+                <h3>WhatsApp</h3>
+                <a href="https://wa.me/919900194260" target="_blank">+91 99001 94260</a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <h3>Email</h3>
+                <a href="mailto:marypoulin356@gmail.com">hello@7pillarcandles.com</a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3>Phone</h3>
+                <a href="tel:+919900194260">+91 99001 94260</a>
+            </div>
+        </div>
+    </section>
+
+
+  <!-- START: Lightbox HTML Structure -->
+    <div id="lightbox-overlay" class="lightbox">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img" class="lightbox-content" src="" alt="Full-size product view">
+    </div>
+    <!-- END: Lightbox HTML Structure -->
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 7 Pillar Candles. Handcrafted with love.</p>
+    </footer>
+<a href="#" id="scrollTopButton" class="scroll-top-btn">&uarr;</a>
+   
+   <!-- START: Replace your old script with this new, complete one -->
+<script>
+    /* --- 1. Mobile Menu Toggle --- */
+    const menuButton = document.querySelector('.mobile-menu-button');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (menuButton && navLinks) {
+        menuButton.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+    } else {
+        console.error("Could not find mobile menu elements.");
+    }
+
+    /* --- 2. Lightbox Logic --- */
+    const lightboxOverlay = document.getElementById('lightbox-overlay');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const productImages = document.querySelectorAll('.featured-image img, .candle-image img');
+
+    if (lightboxOverlay && lightboxImg && lightboxClose && productImages) {
+        
+        productImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src; 
+                lightboxOverlay.classList.add('open'); 
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightboxOverlay.classList.remove('open');
+        });
+
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) { 
+                lightboxOverlay.classList.remove('open');
+            }
+        });
+
+    } else {
+        console.error("Could not find all lightbox elements.");
+    }
+
+    /* --- 3. Scroll to Top Button Logic --- */
+    const scrollTopButton = document.getElementById('scrollTopButton');
+
+    if (scrollTopButton) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { 
+                scrollTopButton.classList.add('visible');
+            } else {
+                scrollTopButton.classList.remove('visible');
+            }
+        });
+
+        scrollTopButton.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    } else {
+        console.error("Could not find scroll to top button.");
+    }
+
+    /* --- 4. NEW: Fade-in on Scroll Logic --- */
+    // This is the "brain" that watches for scrolling
+    const animatedSections = document.querySelectorAll('.animate-on-scroll');
+
+    if (animatedSections.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // When the section enters the screen
+                if (entry.isIntersecting) {
+                    // Add the "is-visible" class to trigger the animation
+                    entry.target.classList.add('is-visible');
+                    // Stop watching it (so it only animates once)
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the section is visible
+
+        // Tell the observer to watch each of our sections
+        animatedSections.forEach(section => {
+            observer.observe(section);
+        });
+    }
+</script>
+<!-- END: New Complete Script -->
+
+
+</body>
+</html>
