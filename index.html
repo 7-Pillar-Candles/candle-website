@@ -345,11 +345,11 @@
         }
 
         .candle-grid {
+             max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 40px;
         }
 
         .candle-card {
@@ -364,7 +364,7 @@
         }
 
         .candle-image {
-            height: 280px;
+            aspect-ratio: 1/1;
             background: linear-gradient(135deg, #E8DCC4, #F5EDE4);
             display: flex;
             align-items: center;
@@ -501,7 +501,26 @@
             font-size: 0.9rem;
             opacity: 0.8;
         }
+/* --- New Category Card Styles --- */
 
+/* This removes the ugly blue link underline from the card */
+.featured-card-link {
+    text-decoration: none;
+}
+
+/* This styles the new "View Collection" text */
+.category-prompt {
+    font-size: 1rem;
+    color: #C9A88A; /* Uses your site's accent color */
+    font-weight: 500;
+    margin-top: 15px; /* Adds space where the price was */
+    transition: color 0.3s ease;
+}
+
+/* Makes the text change color when you hover over the card */
+.featured-card:hover .category-prompt {
+    color: #8B7355; /* Your site's darker accent */
+}
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .featured-grid { grid-template-columns: repeat(2, 1fr); }
@@ -523,12 +542,12 @@
         display: block; /* Show the hamburger button */
     }
 }
-        .featured-image img,
-.candle-image img,
-.about-image img {
+.featured-image > img,
+.candle-image > img,
+.about-image > img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* <-- CHANGE THIS LINE */
+    object-fit: contain !important; /* Force "zoom out" */
 }
 .animate-on-scroll {
     /* "Before" state: hidden and moved down */
@@ -588,7 +607,7 @@
                 </div>
                 <div class="featured-info">
                     <h3>Bubble Tower</h3>
-                    <p>Calming lavender with vanilla undertones</p>
+                    <p>Colorful, handcrafted wax bubble candle. A playful accent for any room.</p>
                     <div class="featured-price">₹499</div>
                 </div>
             </div>
@@ -600,7 +619,7 @@
                 </div>
                 <div class="featured-info">
                     <h3>Cosmic Pillar</h3>
-                    <p>Fresh maritime scent with sea salt notes</p>
+                    <p>Unique purple pillar candle with colorful wax embeds. Truly one-of-a-kind.</p>
                     <div class="featured-price">₹</div>
                 </div>
             </div>
@@ -612,12 +631,73 @@
                 </div>
                 <div class="featured-info">
                     <h3>Sweet Home</h3>
-                    <p>Delicate rose petals with peony hints</p>
+                    <p>Scented candle in a decorative tin with floral wax melts on top.</p>
                     <div class="featured-price">₹</div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- START: New Category Section -->
+<section class="collection" id="categories">
+    <div class="section-header">
+        <h2 class="section-title">Browse by Category</h2>
+        <p class="section-subtitle">Find the perfect style for you</p>
+    </div>
+    
+    <!-- 
+      We are re-using the ".featured-grid" class here 
+      because it's already styled perfectly (3-column, square, centered)
+    -->
+    <div class="featured-grid">
+        
+        <!-- Category Card 1: Tins -->
+        <a href="tin-candles.html" class="featured-card-link">
+            <div class="featured-card">
+                <div class="featured-image">
+                    <!-- Use your best tin candle photo -->
+                    <img src="image_74ae81.jpg" alt="Scented Tin Candle Collection" class="product-image-fit">
+                </div>
+                <div class="featured-info">
+                    <h3>Scented Tin Collection</h3>
+                    <p>Our collection of unique cups, scents, and decor.</p>
+                    <div class="category-prompt">View Collection &rarr;</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Category Card 2: Pillars -->
+        <a href="pillar-candles.html" class="featured-card-link">
+            <div class="featured-card">
+                <div class="featured-image">
+                    <!-- Use your best pillar candle photo -->
+                    <img src="image_2da792.jpg" alt="Pillar Candle Collection" class="product-image-fit">
+                </div>
+                <div class="featured-info">
+                    <h3>Pillar Candle Collection</h3>
+                    <p>Beautiful pillar candles in various shapes and colors.</p>
+                    <div class="category-prompt">View Collection &rarr;</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Category Card 3: Jars/Glass -->
+        <a href="jar-candles.html" class="featured-card-link">
+            <div class="featured-card">
+                <div class="featured-image">
+                    <!-- Use your best jar candle photo -->
+                    <img src="image_2db579.jpg" alt="Jar Candle Collection" class="product-image-fit">
+                </div>
+                <div class="featured-info">
+                    <h3>Jar Candle Collection</h3>
+                    <p>Elegant glass jar candles with unique wax embeds.</p>
+                    <div class="category-prompt">View Collection &rarr;</div>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</section>
+<!-- END: New Category Section -->
 
     <!-- Collection Section -->
     <section class="collection animate-on-scroll" id="collection">
@@ -627,16 +707,16 @@
         </div>
         <div class="candle-grid">
             <div class="candle-card">
-                <div class="candle-image">🕯️</div>
+                <div class="candle-image"><img src="images/fp2.jpg" alt="Description"></div>
                 <div class="candle-info">
-                    <h3>Citrus Sunrise</h3>
-                    <p>Energizing blend of citrus fruits</p>
+                    <h3>Flower Pillar</h3>
+                    <p>A beautiful pillar candle embossed with a delicate flower pattern.</p>
                     <div class="candle-price">₹449</div>
                 </div>
             </div>
 
             <div class="candle-card">
-                <div class="candle-image">🕯️</div>
+                <div class="candle-image"><img src="images/vc.jpg" alt="Description"></div>
                 <div class="candle-info">
                     <h3>Vanilla Comfort</h3>
                     <p>Warm vanilla with caramel notes</p>
@@ -715,7 +795,7 @@
             <div class="contact-card">
                 <div class="contact-icon">✉️</div>
                 <h3>Email</h3>
-                <a href="mailto:marypoulin356@gmail.com">hello@7pillarcandles.com</a>
+                <a href="mailto:marypoulin356@gmail.com">marypoulin356@gmail.com</a>
             </div>
 
             <div class="contact-card">
