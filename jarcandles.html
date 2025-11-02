@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scented Tin Collection - 7 Pillar Candles</title>
+    <title>Jar Candle Collection - 7 Pillar Candles</title>
 
-    <!-- 
-      This is an exact copy of the <head> from your index.html file.
-      It includes your favicon and all your styles.
-    -->
-    <!-- FIXED: Using correct favicon name from your screenshot -->
+    <!-- Correct favicon path from your screenshot -->
     <link rel="icon" type="image/png" href="favicon-16x16.png">
     
     <style>
@@ -102,7 +98,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* FIXED: Correct path to your image */
+            /* Correct path to your image */
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/grouped candle.jpg');
             background-size: cover;
             background-position: center;
@@ -426,7 +422,7 @@
             pointer-events: auto;
         }
 
-        /* --- NEW: "Go Back" Link Styles --- */
+        /* --- "Go Back" Link Styles --- */
         .back-link-wrapper {
             max-width: 960px; /* This matches your grid's width */
             margin: 0 auto; /* This centers it */
@@ -496,15 +492,15 @@
         <!-- Page Title Header -->
         <section class="collection" id="collection-header" style="padding-top: 150px; padding-bottom: 60px; background: rgba(248,245,240,0.8);">
             <div class="section-header">
-                <h2 class="section-title">Scented Tin Collection</h2>
-                <p class="section-subtitle">Our collection of unique cups, scents, and decor</p>
+                <h2 class="section-title">Jar Candle Collection</h2>
+                <p class="section-subtitle">Elegant glass jar candles with unique wax embeds</p>
             </div>
         </section>
 
-        <!-- Product Grid for Tin Candles -->
+        <!-- Product Grid for Jar Candles -->
         <section class="collection" id="collection" style="padding-top: 0;">
             
-            <!-- NEW: "Go Back" link added here -->
+            <!-- "Go Back" link added here -->
             <div class="back-link-wrapper">
                 <a href="index.html#categories" class="go-back-link">&larr; Back to All Categories</a>
             </div>
@@ -512,53 +508,55 @@
             <!-- We re-use the .candle-grid class -->
             <div class="candle-grid">
                 
-                <!-- Tin Candle 1 -->
+                <!-- Jar Candle 1 -->
                 <div class="candle-card">
                     <div class="candle-image">
-                        <!-- FIXED: Correct path to your image -->
-                        <img src="images/sh.jpg" alt="Rose & Peony Tin Candle" class="product-image-fit">
+                        <!-- Using image name from your VSC screenshot -->
+                        <img src="images/cp.jpg" alt="Cosmic Pillar Jar" class="product-image-fit">
                     </div>
                     <div class="candle-info">
-                        <h3>Rose & Peony Tin</h3>
-                        <p>A beautiful floral scent in a green leaf-patterned tin.</p>
-                        <div class="candle-price">₹</div>
+                        <h3>Cosmic Jar</h3>
+                        <p>Unique purple candle with colorful wax embeds in a tall glass.</p>
+                        <div class="candle-price">₹649</div>
                     </div>
                 </div>
 
-                <!-- Tin Candle 2 -->
+                <!-- Jar Candle 2 -->
                 <div class="candle-card">
                     <div class="candle-image">
-                        <!-- You can find another tin candle image, or use a placeholder -->
-                        <img src="images/scarlet ember.jpg" alt="Scarlet Ember Candle" class="product-image-fit">
+                        <!-- Using image name from your VSC screenshot -->
+                        <img src="images/cp2.jpg" alt="Blue Cosmic Jar" class="product-image-fit">
                     </div>
                     <div class="candle-info">
-                        <h3>Scarlet Ember Candle</h3>
-                        <p>Classic vanilla bean in a simple, elegant gold tin.</p>
-                        <div class="candle-price">₹</div>
+                        <h3>Galaxy Jar</h3>
+                        <p>A mesmerizing blue version of our popular cosmic candle.</p>
+                        <div class="candle-price">₹649</div>
                     </div>
                 </div>
 
-                <!-- Tin Candle 3 -->
+                <!-- Jar Candle 3 -->
                 <div class="candle-card">
                     <div class="candle-image">
-                        <img src="images/mb.jpg" alt="Silver Tin Candle" class="product-image-fit">
+                        <!-- Using image name from your VSC screenshot -->
+                        <img src="images/gc2.jpg" alt="Swirl Glass Candle" class="product-image-fit">
                     </div>
                     <div class="candle-info">
-                        <h3>Mystic Bloom</h3>
-                        <p>Fresh sea salt and citrus in a modern silver tin.</p>
-                        <div class="candle-price">₹</div>
+                        <h3>Desert Swirl Glass</h3>
+                        <p>A beautiful layered candle in a modern, angled glass.</p>
+                        <div class="candle-price">₹599</div>
                     </div>
                 </div>
 
-                <!-- Tin Candle 4 -->
+                <!-- Jar Candle 4 (using the image you uploaded) -->
                 <div class="candle-card">
                     <div class="candle-image">
-                        <img src="images/have a nice day.jpg" alt="Amber Tin Candle" class="product-image-fit">
+                        <!-- Using image name from your VSC screenshot -->
+                        <img src="images/vc.jpg" alt="Vanilla Coffee Swirl" class="product-image-fit">
                     </div>
                     <div class="candle-info">
-                        <h3>Have a Nice Day!</h3>
-                        <p>A warm, woody scent in a rustic amber-colored tin.</p>
-                        <div class="candle-price">₹</div>
+                        <h3>Vanilla Coffee Swirl</h3>
+                        <p>A warm, inviting blend of vanilla and coffee in a glass cup.</p>
+                        <div class="candle-price">₹599</div>
                     </div>
                 </div>
                 
@@ -657,7 +655,7 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.CSSClass); 
+                        observer.unobserve(entry.target); // <-- FIXED TYPO
                     }
                 });
             }, { threshold: 0.1 });
