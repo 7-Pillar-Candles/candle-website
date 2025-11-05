@@ -139,17 +139,17 @@
             cursor: pointer;
         }
 
-        /* Hero Section with Parallax */
+        /* Hero Section - FIXED FOR iOS */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                        url('images/gc2.jpg');
+                        url('images/grouped-candle.jpg'); /* ✅ FIXED: No space in filename */
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Parallax effect */
+            /* ✅ FIXED: Removed background-attachment: fixed for iOS compatibility */
             padding: 120px 20px 60px;
             position: relative;
             overflow: hidden;
@@ -208,7 +208,7 @@
             letter-spacing: 1px;
             position: relative;
             overflow: hidden;
-            margin-top: 30px; /* <-- FIXED: Added space between badges and button */
+            margin-top: 30px;
         }
 
         .cta-button::before {
@@ -358,7 +358,6 @@
         .featured-image img {
             width: 100%;
             height: 100%;
-            /* object-fit: cover; */ /* <-- ORIGINAL PROBLEM */
             display: block;
             animation: fadeIn 0.5s ease-in;
             transition: transform 0.5s ease;
@@ -484,7 +483,6 @@
         .candle-image img {
             width: 100%;
             height: 100%;
-            /* object-fit: cover; */ /* <-- ORIGINAL PROBLEM */
             display: block;
             animation: fadeIn 0.5s ease-in;
             transition: transform 0.3s ease;
@@ -518,11 +516,11 @@
             font-weight: 500;
         }
 
-        /* --- FIXED IMAGE FIT: Added this class back --- */
+        /* ✅ FIXED: Changed from contain to cover */
         .product-image-fit {
             width: 100%;
             height: 100%;
-            object-fit: contain !important; /* Force "zoom out" */
+            object-fit: cover !important;
         }
 
         /* About Section */
@@ -552,8 +550,8 @@
         .about-image img {
             width: 100%;
             height: 100%;
-            /* object-fit: cover; */ /* <-- ORIGINAL PROBLEM */
             display: block;
+            object-fit: cover;
         }
 
         .about-text h2 {
@@ -694,10 +692,22 @@
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
+            position: relative;
+            z-index: 2;
         }
 
         .contact-card a:hover {
             color: #C9A88A;
+        }
+
+        .stretched-link::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
         }
 
         /* Footer */
@@ -829,22 +839,51 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+            .hero h1 { 
+                font-size: 2.2rem;
+            }
             
-            /* 2 columns on mobile for products */
+            .hero p {
+                font-size: 1rem;
+            }
+            
             .featured-grid { 
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 20px;
+                gap: 15px !important;
             }
             
             .candle-grid { 
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 20px;
+                gap: 15px !important;
             }
             
-            /* Keep other sections single column */
-            .about-content { grid-template-columns: 1fr; }
-            .testimonials-grid { grid-template-columns: 1fr; }
+            .featured-info, .candle-info {
+                padding: 15px;
+            }
+            
+            .featured-info h3 {
+                font-size: 1.1rem;
+            }
+            
+            .candle-info h3 {
+                font-size: 1.0rem;
+            }
+            
+            .featured-info p, .candle-info p {
+                font-size: 0.8rem;
+            }
+            
+            .featured-price, .candle-price {
+                font-size: 1.0rem;
+            }
+
+            .about-content { 
+                grid-template-columns: 1fr; 
+            }
+            
+            .testimonials-grid { 
+                grid-template-columns: 1fr; 
+            }
             
             .nav-content {
                 flex-wrap: wrap;
@@ -879,9 +918,18 @@
             .mobile-menu-button {
                 display: block;
             }
+            
+            .info-badges {
+                gap: 10px;
+            }
+            
+            .badge {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
         }
 
-        /* Tablet view (between mobile and desktop) */
+        /* Tablet view */
         @media (min-width: 769px) and (max-width: 1024px) {
             .featured-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -946,7 +994,7 @@
                 <div class="featured-info">
                     <h3>Bubble Tower</h3>
                     <p>Colorful, handcrafted wax bubble candle. A playful accent for any room.</p>
-                    <div class="featured-price">₹</div>
+                    <div class="featured-price">₹499</div>
                 </div>
             </div>
 
@@ -958,7 +1006,7 @@
                 <div class="featured-info">
                     <h3>Cosmic Pillar</h3>
                     <p>Unique purple pillar candle with colorful wax embeds. Truly one-of-a-kind.</p>
-                    <div class="featured-price">₹</div>
+                    <div class="featured-price">₹549</div>
                 </div>
             </div>
 
@@ -970,7 +1018,7 @@
                 <div class="featured-info">
                     <h3>Sweet Home</h3>
                     <p>Scented candle in a decorative tin with floral wax melts on top.</p>
-                    <div class="featured-price">₹</div>
+                    <div class="featured-price">₹599</div>
                 </div>
             </div>
         </div>
@@ -998,7 +1046,7 @@
             <a href="pillarcandles.html" class="featured-card-link">
                 <div class="featured-card">
                     <div class="featured-image">
-                        <img src="" alt="Pillar Candle Collection" class="product-image-fit">
+                        <img src="images/fp.jpg" alt="Pillar Candle Collection" class="product-image-fit">
                     </div>
                     <div class="featured-info">
                         <h3>Pillar Candle Collection</h3>
@@ -1011,7 +1059,7 @@
             <a href="jarcandles.html" class="featured-card-link">
                 <div class="featured-card">
                     <div class="featured-image">
-                        <img src="" alt="Jar Candle Collection" class="product-image-fit">
+                        <img src="images/cp.jpg" alt="Jar Candle Collection" class="product-image-fit">
                     </div>
                     <div class="featured-info">
                         <h3>Jar Candle Collection</h3>
@@ -1036,7 +1084,7 @@
                 <div class="candle-info">
                     <h3>Flower Pillar</h3>
                     <p>A beautiful pillar candle embossed with a delicate flower pattern. Perfect for special occasions.</p>
-                    <div class="candle-price">₹</div>
+                    <div class="candle-price">₹449</div>
                 </div>
             </div>
 
@@ -1047,7 +1095,7 @@
                 <div class="candle-info">
                     <h3>Vanilla Comfort</h3>
                     <p>Warm vanilla with caramel notes. Creates a cozy atmosphere in any space.</p>
-                    <div class="candle-price">₹</div>
+                    <div class="candle-price">₹399</div>
                 </div>
             </div>
 
@@ -1058,7 +1106,7 @@
                 <div class="candle-info">
                     <h3>Purple Paisley Tin</h3>
                     <p>A striking purple peony candle in a colorful paisley-patterned tin.</p>
-                    <div class="candle-price">₹</div>
+                    <div class="candle-price">₹579</div>
                 </div>
             </div>
 
@@ -1069,7 +1117,7 @@
                 <div class="candle-info">
                     <h3>Desert Swirl Glass</h3>
                     <p>A beautiful layered candle with white and beige wax in a modern glass.</p>
-                    <div class="candle-price">₹</div>
+                    <div class="candle-price">₹529</div>
                 </div>
             </div>
 
@@ -1078,7 +1126,7 @@
                 <div class="candle-info">
                     <h3>Sandalwood Sage</h3>
                     <p>Earthy sandalwood blended with sage. Grounding and calming for meditation.</p>
-                    <div class="candle-price">₹</div>
+                    <div class="candle-price">₹579</div>
                 </div>
             </div>
 
@@ -1087,7 +1135,7 @@
                 <div class="candle-info">
                     <h3>Jasmine Night</h3>
                     <p>Sweet jasmine with hints of vanilla. Perfect fragrance for evening calm and relaxation.</p>
-                    <div class="candle-price">₹</div>
+                    <div class="candle-price">₹519</div>
                 </div>
             </div>
         </div>
@@ -1116,6 +1164,10 @@
                 <p class="testimonial-text">"These candles make the best gifts! I've ordered several times now. Love supporting a local artisan who clearly puts so much care into each piece."</p>
                 <p class="testimonial-author">- Rohan M.</p>
             </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="mailto:marypoulin356@gmail.com?subject=My%20Candle%20Review!" class="cta-button">Leave Your Review</a>
         </div>
     </section>
 
@@ -1164,7 +1216,7 @@
         </div>
         <div class="about-content">
             <div class="about-image">
-                <img src="images/about-photo.jpg" alt="Mary Poulin - Candle maker at 7 Pillar Candles" onerror="this.style.display='none'; this.parentElement.innerHTML='👩‍🎨';" class="product-image-fit">
+                <img src="images/about-photo.jpg" alt="Mary Poulin - Candle maker at 7 Pillar Candles" onerror="this.style.display='none'; this.parentElement.innerHTML='👩‍🎨';">
             </div>
             <div class="about-text">
                 <h2>Made with Love</h2>
@@ -1185,21 +1237,21 @@
             <div class="contact-card">
                 <div class="contact-icon">💬</div>
                 <h3>WhatsApp</h3>
-                <a href="https://wa.me/919900194260" target="_blank">+91 99001 94260</a>
+                <a href="https://wa.me/919900194260" target="_blank" class="stretched-link">+91 99001 94260</a>
                 <p style="font-size: 0.85rem; color: #999; margin-top: 8px;">Best for quick questions</p>
             </div>
 
             <div class="contact-card">
                 <div class="contact-icon">✉️</div>
                 <h3>Email</h3>
-                <a href="mailto:marypoulin356@gmail.com">marypoulin356@gmail.com</a>
+                <a href="mailto:marypoulin356@gmail.com" class="stretched-link">marypoulin356@gmail.com</a>
                 <p style="font-size: 0.85rem; color: #999; margin-top: 8px;">For custom orders & inquiries</p>
             </div>
 
             <div class="contact-card">
                 <div class="contact-icon">📱</div>
                 <h3>Phone</h3>
-                <a href="tel:+919900194260">+91 99001 94260</a>
+                <a href="tel:+919900194260" class="stretched-link">+91 99001 94260</a>
                 <p style="font-size: 0.85rem; color: #999; margin-top: 8px;">Call anytime!</p>
             </div>
         </div>
@@ -1214,7 +1266,7 @@
 
     <footer>
         <div class="social-links">
-            <a href="httpsG://instagram.com/7pillarcandles" target="_blank">📷 Instagram</a>
+            <a href="https://instagram.com/7pillarcandles" target="_blank">📷 Instagram</a>
             <a href="https://facebook.com/7pillarcandles" target="_blank">👍 Facebook</a>
             <a href="https://wa.me/919900194260" target="_blank">💬 WhatsApp</a>
         </div>
@@ -1226,9 +1278,11 @@
         /* 1. Loading Screen */
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.classList.add('hidden');
-            }, 1000); // 1-second delay
+            if (loader) {
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                }, 1000);
+            }
         });
 
         /* 2. Mobile Menu Toggle */
@@ -1240,7 +1294,6 @@
                 navLinks.classList.toggle('open');
             });
 
-            // Close menu when clicking a link
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.addEventListener('click', () => {
                     navLinks.classList.remove('open');
@@ -1283,7 +1336,6 @@
                 }
             });
 
-            // Close on Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && lightboxOverlay.classList.contains('open')) {
                     lightboxOverlay.classList.remove('open');
