@@ -67,7 +67,7 @@
             color: #8B7355;
             letter-spacing: 2px;
         }
-
+        
         /* Background Overlay */
         .bg-overlay {
             position: fixed;
@@ -94,6 +94,12 @@
             z-index: 1000;
             padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav.scrolled {
+            padding: 12px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .nav-content {
@@ -110,8 +116,14 @@
             font-weight: 600;
             background: linear-gradient(135deg, #C9A88A, #8B7355);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -123,7 +135,23 @@
             color: #666;
             text-decoration: none;
             font-size: 0.95rem;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #C9A88A, #8B7355);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
@@ -137,25 +165,35 @@
             background: none;
             border: none;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        /* Hero Section - FIXED FOR iOS */
+        .mobile-menu-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                        url('images/grouped-candle.jpg'); /* ✅ FIXED: No space in filename */
+                        url('images/grouped-candle.jpg');
             background-size: cover;
             background-position: center;
-            /* ✅ FIXED: Removed background-attachment: fixed for iOS compatibility */
             padding: 120px 20px 60px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Floating particles animation */
+        /* Parallax for Desktop Only */
+        @media (min-width: 769px) {
+            .hero {
+                background-attachment: fixed;
+            }
+        }
+
         .hero::after {
             content: '';
             position: absolute;
@@ -179,6 +217,18 @@
         .hero-content {
             text-align: center;
             max-width: 700px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
@@ -209,6 +259,8 @@
             position: relative;
             overflow: hidden;
             margin-top: 30px;
+            border: none;
+            cursor: pointer;
         }
 
         .cta-button::before {
@@ -236,7 +288,6 @@
             transform: translateY(0) scale(0.98);
         }
 
-        /* Badge Styles */
         .info-badges {
             display: flex;
             justify-content: center;
@@ -253,9 +304,13 @@
             border-radius: 20px;
             font-size: 0.85rem;
             border: 1px solid rgba(255,255,255,0.3);
+            animation: fadeIn 1s ease-out backwards;
         }
 
-        /* Sections */
+        .badge:nth-child(1) { animation-delay: 0.2s; }
+        .badge:nth-child(2) { animation-delay: 0.4s; }
+        .badge:nth-child(3) { animation-delay: 0.6s; }
+
         .featured, .collection, .about, .contact, .testimonials, .faq {
             padding: 80px 20px;
         }
@@ -294,6 +349,7 @@
             font-weight: 300;
             background: linear-gradient(135deg, #8B7355, #C9A88A);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
             letter-spacing: 2px;
@@ -304,7 +360,6 @@
             font-size: 0.95rem;
         }
 
-        /* Featured Grid */
         .featured-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -319,6 +374,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            border-radius: 8px;
         }
 
         .featured-card::before {
@@ -359,17 +415,12 @@
             width: 100%;
             height: 100%;
             display: block;
-            animation: fadeIn 0.5s ease-in;
             transition: transform 0.5s ease;
+            object-fit: contain !important; /* ✅ FIXED */
         }
 
         .featured-card:hover .featured-image img {
             transform: scale(1.1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .featured-badge {
@@ -411,9 +462,42 @@
             font-size: 1.2rem;
             color: #2C2C2C;
             font-weight: 500;
+            margin-bottom: 15px;
         }
 
-        /* Category Cards */
+        /* --- Order Button Styles --- */
+        .order-button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #C9A88A, #8B7355);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-button::before {
+            content: '💬 ';
+            margin-right: 5px;
+        }
+
+        .order-button:hover {
+           background: linear-gradient(135deg, #8B7355, #6B5D47);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .order-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
         .featured-card-link {
             text-decoration: none;
             display: block;
@@ -431,7 +515,6 @@
             color: #8B7355;
         }
 
-        /* Collection Grid */
         .candle-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -446,6 +529,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            border-radius: 8px;
         }
 
         .candle-card::after {
@@ -484,8 +568,8 @@
             width: 100%;
             height: 100%;
             display: block;
-            animation: fadeIn 0.5s ease-in;
             transition: transform 0.3s ease;
+            object-fit: contain !important; /* ✅ FIXED */
         }
 
         .candle-card:hover .candle-image img {
@@ -514,16 +598,16 @@
             font-size: 1.1rem;
             color: #2C2C2C;
             font-weight: 500;
+            margin-bottom: 12px;
         }
 
-        /* ✅ FIXED: Changed from contain to cover */
+        /* ✅ FIXED: This rule now correctly targets all product images */
         .product-image-fit {
             width: 100%;
             height: 100%;
-            object-fit: cover !important;
+            object-fit: contain !important; /* Force "zoom out" */
         }
 
-        /* About Section */
         .about-content {
             max-width: 1000px;
             margin: 0 auto;
@@ -560,6 +644,7 @@
             margin-bottom: 25px;
             background: linear-gradient(135deg, #8B7355, #C9A88A);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
         }
@@ -571,7 +656,6 @@
             margin-bottom: 20px;
         }
 
-        /* Testimonials Section */
         .testimonials-grid {
             max-width: 1000px;
             margin: 0 auto;
@@ -585,6 +669,12 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
         .testimonial-stars {
@@ -605,7 +695,6 @@
             color: #2C2C2C;
         }
 
-        /* FAQ Section */
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
@@ -617,6 +706,12 @@
             margin-bottom: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transform: translateX(5px);
         }
 
         .faq-question {
@@ -631,7 +726,6 @@
             line-height: 1.6;
         }
 
-        /* Contact Section */
         .contact-grid {
             max-width: 900px;
             margin: 0 auto;
@@ -710,7 +804,6 @@
             z-index: 1;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -727,11 +820,12 @@
             text-decoration: none;
             margin: 0 15px;
             font-size: 0.95rem;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
         }
 
         .social-links a:hover {
             opacity: 0.8;
+            transform: translateY(-2px);
         }
 
         footer p {
@@ -739,7 +833,6 @@
             opacity: 0.8;
         }
 
-        /* Lightbox */
         .lightbox {
             opacity: 0;
             pointer-events: none;
@@ -766,6 +859,12 @@
             max-height: 90%;
             object-fit: contain;
             box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         #lightbox-close {
@@ -777,6 +876,11 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        #lightbox-close:hover {
+            transform: rotate(90deg) scale(1.1);
         }
 
         .featured-image img:hover,
@@ -784,7 +888,6 @@
             cursor: zoom-in;
         }
 
-        /* Scroll to Top Button */
         .scroll-top-btn {
             opacity: 0;
             pointer-events: none;
@@ -806,6 +909,11 @@
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             cursor: pointer;
+        }
+
+        .scroll-top-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
             animation: bounce-in 0.5s ease-out;
         }
 
@@ -815,17 +923,44 @@
             100% { transform: scale(1) rotate(0); }
         }
 
-        .scroll-top-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
         .scroll-top-btn:hover {
             transform: translateY(-5px) scale(1.1);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        /* Animations */
+        .sticky-order-mobile {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9998;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            padding: 15px 20px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .sticky-order-mobile a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .sticky-order-mobile a:active {
+            transform: scale(0.95);
+        }
+
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -837,11 +972,7 @@
             transform: translateY(0);
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .hero {
-        background-attachment: fixed;
-    }
             .hero h1 { 
                 font-size: 2.2rem;
             }
@@ -930,9 +1061,18 @@
                 font-size: 0.75rem;
                 padding: 6px 12px;
             }
+
+            /* Show sticky mobile order button */
+            .sticky-order-mobile {
+                display: block;
+                background: linear-gradient(135deg, #C9A88A, #8B7355);
+            }
+
+            .scroll-top-btn {
+                bottom: 90px;
+            }
         }
 
-        /* Tablet view */
         @media (min-width: 769px) and (max-width: 1024px) {
             .featured-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -954,7 +1094,7 @@
 
     <div class="bg-overlay"></div>
 
-    <nav class="nav">
+    <nav class="nav" id="navbar">
         <div class="nav-content">
             <div class="logo">7 PILLAR CANDLES</div>
             <button class="mobile-menu-button">☰</button>
@@ -998,6 +1138,7 @@
                     <h3>Bubble Tower</h3>
                     <p>Colorful, handcrafted wax bubble candle. A playful accent for any room.</p>
                     <div class="featured-price">₹499</div>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Bubble%20Tower%20candle%20(₹499)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1010,6 +1151,7 @@
                     <h3>Cosmic Pillar</h3>
                     <p>Unique purple pillar candle with colorful wax embeds. Truly one-of-a-kind.</p>
                     <div class="featured-price">₹549</div>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Cosmic%20Pillar%20candle%20(₹549)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1022,6 +1164,7 @@
                     <h3>Sweet Home</h3>
                     <p>Scented candle in a decorative tin with floral wax melts on top.</p>
                     <div class="featured-price">₹599</div>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Sweet%20Home%20candle%20(₹599)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -1088,6 +1231,7 @@
                     <h3>Flower Pillar</h3>
                     <p>A beautiful pillar candle embossed with a delicate flower pattern. Perfect for special occasions.</p>
                     <div class="candle-price">₹449</div>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Flower%20Pillar%20candle%20(₹449)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1099,6 +1243,7 @@
                     <h3>Vanilla Comfort</h3>
                     <p>Warm vanilla with caramel notes. Creates a cozy atmosphere in any space.</p>
                     <div class="candle-price">₹399</div>
+                    <a href="httpsAll%20Products://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Vanilla%20Comfort%20candle%20(₹399)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1110,6 +1255,7 @@
                     <h3>Purple Paisley Tin</h3>
                     <p>A striking purple peony candle in a colorful paisley-patterned tin.</p>
                     <div class="candle-price">₹579</div>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Purple%20Paisley%20Tin%20candle%20(₹579)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1121,6 +1267,7 @@
                     <h3>Desert Swirl Glass</h3>
                     <p>A beautiful layered candle with white and beige wax in a modern glass.</p>
                     <div class="candle-price">₹529</div>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Desert%20Swirl%20Glass%20candle%20(₹529)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1130,6 +1277,7 @@
                     <h3>Sandalwood Sage</h3>
                     <p>Earthy sandalwood blended with sage. Grounding and calming for meditation.</p>
                     <div class="candle-price">₹579</div>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Sandalwood%20Sage%20candle%20(₹579)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1139,6 +1287,7 @@
                     <h3>Jasmine Night</h3>
                     <p>Sweet jasmine with hints of vanilla. Perfect fragrance for evening calm and relaxation.</p>
                     <div class="candle-price">₹519</div>
+                    <a href="httpsTwo://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Jasmine%20Night%20candle%20(₹519)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -1219,7 +1368,7 @@
         </div>
         <div class="about-content">
             <div class="about-image">
-                <img src="images/about-photo.jpg" alt="Mary Poulin - Candle maker at 7 Pillar Candles" onerror="this.style.display='none'; this.parentElement.innerHTML='👩‍🎨';">
+                <img src="images/about.jpg" alt="Mary Poulin - Candle maker at 7 Pillar Candles" onerror="this.style.display='none'; this.parentElement.innerHTML='👩‍🎨';" class="product-image-fit">
             </div>
             <div class="about-text">
                 <h2>Made with Love</h2>
@@ -1260,6 +1409,13 @@
         </div>
     </section>
 
+    <div class="sticky-order-mobile">
+        <a href="https://wa.me/919900194260?text=Hi!%20I'd%20like%20to%20order%20some%20candles" target="_blank">
+            <span>💬</span>
+            <span>Order via WhatsApp</span>
+        </a>
+    </div>
+
     <div id="lightbox-overlay" class="lightbox">
         <span id="lightbox-close">&times;</span>
         <img id="lightbox-img" class="lightbox-content" src="" alt="Full-size product view">
@@ -1288,23 +1444,40 @@
             }
         });
 
-        /* 2. Mobile Menu Toggle */
+        /* 2. Navbar Scroll Effect */
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.scrollY;
+                if (currentScroll > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                lastScroll = currentScroll;
+            });
+        }
+
+        /* 3. Mobile Menu Toggle */
         const menuButton = document.querySelector('.mobile-menu-button');
         const navLinks = document.querySelector('.nav-links');
 
         if (menuButton && navLinks) {
             menuButton.addEventListener('click', () => {
                 navLinks.classList.toggle('open');
+                menuButton.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
             });
 
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.addEventListener('click', () => {
                     navLinks.classList.remove('open');
+                    menuButton.textContent = '☰';
                 });
             });
         }
 
-        /* 3. Smooth Scroll */
+        /* 4. Smooth Scroll */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1315,7 +1488,7 @@
             });
         });
 
-        /* 4. Lightbox */
+        /* 5. Lightbox */
         const lightboxOverlay = document.getElementById('lightbox-overlay');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxClose = document.getElementById('lightbox-close');
@@ -1346,7 +1519,7 @@
             });
         }
 
-        /* 5. Scroll to Top Button */
+        /* 6. Scroll to Top Button */
         const scrollTopButton = document.getElementById('scrollTopButton');
 
         if (scrollTopButton) {
@@ -1367,7 +1540,7 @@
             });
         }
 
-        /* 6. Fade-in on Scroll Animation */
+        /* 7. Fade-in on Scroll Animation */
         const animatedSections = document.querySelectorAll('.animate-on-scroll');
 
         if (animatedSections.length > 0) {
@@ -1385,7 +1558,7 @@
             });
         }
 
-        /* 7. Add subtle card animations */
+        /* 8. Add subtle card animations */
         const cards = document.querySelectorAll('.featured-card, .candle-card, .contact-card, .testimonial-card');
         cards.forEach(card => {
             card.addEventListener('mouseenter', function() {
