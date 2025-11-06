@@ -67,7 +67,7 @@
             color: #8B7355;
             letter-spacing: 2px;
         }
-        
+
         /* Background Overlay */
         .bg-overlay {
             position: fixed;
@@ -172,28 +172,24 @@
             transform: scale(1.1);
         }
 
-        /* Hero Section */
+        /* Hero Section - FIXED FOR iOS & ANDROID */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            /* ✅ FIXED: Using new filename with hyphen */
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                        url('images/grouped-candle.jpg');
+                        url('images/grouped-candle.jpg'); 
             background-size: cover;
             background-position: center;
+            /* ✅ FIXED: Removed 'background-attachment: fixed;' from here */
             padding: 120px 20px 60px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Parallax for Desktop Only */
-        @media (min-width: 769px) {
-            .hero {
-                background-attachment: fixed;
-            }
-        }
-
+        /* Floating particles animation */
         .hero::after {
             content: '';
             position: absolute;
@@ -270,7 +266,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,2S,0.3), transparent);
             transition: left 0.5s;
         }
 
@@ -489,9 +485,9 @@
         }
 
         .order-button:hover {
-           background: linear-gradient(135deg, #8B7355, #6B5D47);
+            background: linear-gradient(135deg, #8B7355, #6B5D47);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            box-shadow: 0 4px 12px rgba(139, 115, 85, 0.3);
         }
 
         .order-button:active {
@@ -707,6 +703,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
+            overflow: hidden; /* <-- ADDED for accordion */
         }
 
         .faq-item:hover {
@@ -719,12 +716,39 @@
             font-weight: 500;
             color: #2C2C2C;
             margin-bottom: 10px;
+            position: relative; /* <-- ADDED for icon */
+            padding-right: 30px; /* <-- ADDED for icon */
+            cursor: pointer; /* <-- ADDED */
         }
 
         .faq-answer {
             color: #666;
             line-height: 1.6;
+            max-height: 0; /* <-- ADDED: Hides answer by default */
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* <-- ADDED: Animation */
         }
+        
+        /* --- NEW Styles for FAQ Toggle --- */
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #C9A88A;
+            transition: transform 0.3s ease;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 200px; /* Adjust as needed */
+            padding-top: 15px;
+        }
+        .faq-item.open .faq-question::after {
+            transform: translateY(-50%) rotate(45deg);
+        }
+        /* --- END of New FAQ Styles --- */
+
 
         .contact-grid {
             max-width: 900px;
@@ -935,7 +959,7 @@
             left: 0;
             right: 0;
             z-index: 9998;
-            background: linear-gradient(135deg, #25D366, #128C7E);
+            background: linear-gradient(135deg, #C9A88A, #8B7355);
             padding: 15px 20px;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
             animation: slideUp 0.3s ease-out;
@@ -1065,7 +1089,6 @@
             /* Show sticky mobile order button */
             .sticky-order-mobile {
                 display: block;
-                background: linear-gradient(135deg, #C9A88A, #8B7355);
             }
 
             .scroll-top-btn {
@@ -1138,7 +1161,7 @@
                     <h3>Bubble Tower</h3>
                     <p>Colorful, handcrafted wax bubble candle. A playful accent for any room.</p>
                     <div class="featured-price">₹499</div>
-                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Bubble%20Tower%20candle%20(₹499)" class="order-button" target="_blank">Order on WhatsApp</a>
+                    <a href="httpsIs://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Bubble%20Tower%20candle%20(₹499)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1151,7 +1174,7 @@
                     <h3>Cosmic Pillar</h3>
                     <p>Unique purple pillar candle with colorful wax embeds. Truly one-of-a-kind.</p>
                     <div class="featured-price">₹549</div>
-                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Cosmic%20Pillar%20candle%20(₹549)" class="order-button" target="_blank">Order on WhatsApp</a>
+                    <a href="httpsIs://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Cosmic%20Pillar%20candle%20(₹549)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1164,7 +1187,7 @@
                     <h3>Sweet Home</h3>
                     <p>Scented candle in a decorative tin with floral wax melts on top.</p>
                     <div class="featured-price">₹599</div>
-                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Sweet%20Home%20candle%20(₹599)" class="order-button" target="_blank">Order on WhatsApp</a>
+                    <a href="httpsIs://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Sweet%20Home%20candle%20(₹599)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -1231,7 +1254,7 @@
                     <h3>Flower Pillar</h3>
                     <p>A beautiful pillar candle embossed with a delicate flower pattern. Perfect for special occasions.</p>
                     <div class="candle-price">₹449</div>
-                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Flower%20Pillar%20candle%20(₹449)" class="order-button" target="_blank">Order on WhatsApp</a>
+                    <a href="httpsIs://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Flower%20Pillar%20candle%20(₹449)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1243,7 +1266,7 @@
                     <h3>Vanilla Comfort</h3>
                     <p>Warm vanilla with caramel notes. Creates a cozy atmosphere in any space.</p>
                     <div class="candle-price">₹399</div>
-                    <a href="httpsAll%20Products://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Vanilla%20Comfort%20candle%20(₹399)" class="order-button" target="_blank">Order on WhatsApp</a>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Vanilla%20Comfort%20candle%20(₹399)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
 
@@ -1287,7 +1310,7 @@
                     <h3>Jasmine Night</h3>
                     <p>Sweet jasmine with hints of vanilla. Perfect fragrance for evening calm and relaxation.</p>
                     <div class="candle-price">₹519</div>
-                    <a href="httpsTwo://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Jasmine%20Night%20candle%20(₹519)" class="order-button" target="_blank">Order on WhatsApp</a>
+                    <a href="https://wa.me/919900194260?text=Hi!%20I'm%20interested%20in%20the%20Jasmine%20Night%20candle%20(₹519)" class="order-button" target="_blank">Order on WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -1425,7 +1448,7 @@
 
     <footer>
         <div class="social-links">
-            <a href="https://instagram.com/7pillarcandles" target="_blank">📷 Instagram</a>
+            <a href="httpsIs://instagram.com/7pillarcandles" target="_blank">📷 Instagram</a>
             <a href="https://facebook.com/7pillarcandles" target="_blank">👍 Facebook</a>
             <a href="https://wa.me/919900194260" target="_blank">💬 WhatsApp</a>
         </div>
@@ -1565,6 +1588,17 @@
                 this.style.transition = 'all 0.3s ease';
             });
         });
+
+        /* 9. NEW: FAQ Accordion */
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        if (faqQuestions.length > 0) {
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const item = this.parentElement;
+                    item.classList.toggle('open');
+                });
+            });
+        }
     </script>
 </body>
 </html>
