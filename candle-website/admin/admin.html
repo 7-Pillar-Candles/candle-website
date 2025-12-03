@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>7 Pillar Candles - Admin Panel</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; background: #faf7f4; }
+    .login-box, .admin-panel { max-width: 680px; margin: auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+    input, textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 6px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; background: #8B7355; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+    button:hover { background: #6B563F; }
+    .product-card { background: white; padding: 15px; border-radius: 10px; margin-top: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.08); }
+    img.thumb { display:block; margin-top:8px; border-radius:6px; max-width:160px; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-box" id="loginBox">
+    <h2>Admin Login</h2>
+    <input type="password" id="adminPass" placeholder="Enter admin password">
+    <button id="loginBtn">Login</button>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-panel" id="adminPanel" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2>Admin Dashboard</h2>
+      <button id="logoutBtn" style="background:#c94f4f;">Logout</button>
+    </div>
+
+    <h3>Add New Candle</h3>
+    <input id="candleName" placeholder="Candle Name">
+    <input id="candlePrice" placeholder="Price (numbers only)">
+    <textarea id="candleDesc" placeholder="Description"></textarea>
+
+    <label>Upload Image:</label>
+    <input type="file" id="candleImage" accept="image/*">
+
+    <button id="addBtn">Add Candle</button>
+
+    <h3 style="margin-top:22px;">Existing Candles</h3>
+    <div id="candleList"></div>
+  </div>
+ 
+
+
+  <script type="module">
+    // ---- imports & firebase core from firebase.js ----
+    import { db, storage } from "../firebase.js"; // ensure this file exists and exports db,storage
+    import { collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+const cloud_name = "drx2nb2bm";
+const upload_preset = "unsigned_candle_upload";
+
+// Upload image to Cloudinary
+async function uploadToCloudinary(file) {
+  const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("upload_preset", upload_preset);
+
+  const res = await fetch(url, {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  return data.secure_url;
+}
+
+    // ---- simple password (change later) ----
+    const ADMIN_PASSWORD = "pillaradmin2024";
+
+    // ---- expose handlers to buttons ----
+    const loginBtn = document.getElementById("loginBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const addBtn = document.getElementById("addBtn");
+
+    loginBtn.addEventListener("click", () => {
+      const pass = document.getElementById("adminPass").value;
+      if (pass === ADMIN_PASSWORD) {
+        localStorage.setItem("adminLoggedIn", "true");
+        showAdmin();
+      } else {
+        alert("Wrong Password");
+      }
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("adminLoggedIn");
+      location.reload();
+    });
+
+    addBtn.addEventListener("click", () => addCandle());
+
+    // ---- show admin if already logged ----
+    function showAdmin() {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+      loadCandles();
+    }
+
+    if (localStorage.getItem("adminLoggedIn") === "true") {
+      showAdmin();
+    }
+
+    // ---- load existing candles ----
+    async function loadCandles() {
+      const list = document.getElementById("candleList");
+      list.innerHTML = "Loading...";
+
+      try {
+        const snapshot = await getDocs(collection(db, "candles"));
+        list.innerHTML = "";
+        if (snapshot.empty) {
+          list.innerHTML = "<p>No candles found yet.</p>";
+          return;
+        }
+
+        snapshot.forEach(docSnap => {
+          const c = docSnap.data();
+          const id = docSnap.id;
+
+          const card = document.createElement("div");
+          card.className = "product-card";
+
+          const title = document.createElement("h4");
+          title.textContent = c.name || "Unnamed";
+
+          const price = document.createElement("p");
+          price.textContent = c.price ? `₹${c.price}` : "Price on Request";
+
+          const desc = document.createElement("p");
+          desc.textContent = c.description || "";
+
+          const img = document.createElement("img");
+          img.className = "thumb";
+          img.src = c.image || "";
+          img.alt = c.name || "";
+
+          const btnRow = document.createElement("div");
+          btnRow.className = "row";
+
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "Delete";
+          delBtn.addEventListener("click", async () => {
+            if (!confirm("Delete this candle?")) return;
+            await deleteDoc(doc(db, "candles", id));
+            loadCandles();
+          });
+
+          card.appendChild(title);
+          card.appendChild(price);
+          card.appendChild(desc);
+          if (c.image) card.appendChild(img);
+          btnRow.appendChild(delBtn);
+          card.appendChild(btnRow);
+
+          list.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Error loading candles:", err);
+        list.innerHTML = "<p style='color:#c00;'>Failed to load candles — see console.</p>";
+      }
+    }
+
+    // ---- add candle (upload image then write doc) ----
+    async function addCandle() {
+      const name = document.getElementById("candleName").value.trim();
+      const priceRaw = document.getElementById("candlePrice").value.trim();
+      const price = priceRaw === "" ? null : Number(priceRaw);
+      const desc = document.getElementById("candleDesc").value.trim();
+      const file = document.getElementById("candleImage").files[0];
+
+      if (!name || (!price && price !== 0) || !desc || !file) {
+        alert("Please fill all fields and upload an image");
+        return;
+      }
+
+      try {
+        const imageUrl = await uploadToCloudinary(file);
+
+        await addDoc(collection(db, "candles"), {
+          name,
+          price,
+          description: desc,
+          image: imageUrl,
+          createdAt: Date.now()
+        });
+
+        alert("Candle added!");
+        // clear inputs
+        document.getElementById("candleName").value = "";
+        document.getElementById("candlePrice").value = "";
+        document.getElementById("candleDesc").value = "";
+        document.getElementById("candleImage").value = "";
+        loadCandles();
+      } catch (err) {
+        console.error("Add candle error:", err);
+        alert("Failed to add candle — check console.");
+      }
+    }
+window.addCandle = addCandle;
+
+    // make functions visible for debugging if needed
+    window._test = { loadCandles, addCandle };
+    console.log("Admin script loaded. Firestore objects:", db, storage);
+  </script>
+
+</body>
+</html>
