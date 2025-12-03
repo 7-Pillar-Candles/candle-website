@@ -1,4 +1,5 @@
  
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&display=swap');
         *{
             margin: 0;
             padding: 0;
@@ -1100,332 +1101,387 @@
                 gap: 30px;
             }
         }
-/* 🎄 CHRISTMAS BANNER SECTION */
-.christmas-banner {
+/* 🎄 CHRISTMAS BANNER SECTION - PREMIUM UPGRADE */
+
+#christmas-banner {
     position: relative;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #d73f32, #8b1e14) !important;
-    color: white;
-    text-align: center;
+    /* Deep "Royal Christmas" Gradient (Burgundy to Midnight) */
+    background: radial-gradient(circle at center, #7a0e0e 0%, #4a0505 60%, #1a0202 100%) !important;
+    padding: 100px 20px;
     overflow: hidden;
-    border-radius: 0;
-    margin-top: -20px;
-    z-index: 9999; 
-} 
-.christmas-banner {
-    background: none !important;
-    background-color: #d73f32 !important; /* solid Christmas red */
-    background-image: none !important;
-    isolation: isolate;
-}
-
-
-.christmas-banner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: #d73f32 !important; 
-    z-index: -1;
-}
-
-.christmas-banner + .bg-overlay,
-.christmas-banner .bg-overlay,
-.bg-overlay {
-    mask-image: none;
-}
-
-.christmas-banner {
-    isolation: isolate; /* THIS is the magic fix */
-}
-.christmas-content h2 {
-    font-size: 2.4rem;
-    font-weight: 300;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px rgba(255,255,255,0.4);
-}
-
-.christmas-content p {
-    font-size: 1rem;
-    opacity: 0.9;
-    margin-bottom: 25px;
-}
-
-.christmas-cta {
-    display: inline-block;
-    padding: 12px 35px;
-    background: #fff;
-    color: #b8322a;
-    border-radius: 30px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.christmas-cta:hover {
-    transform: translateY(-3px);
-    background: #ffecec;
-}
-
-/* Candle Images */
-.christmas-images {
-    margin-top: 40px;
+    isolation: isolate; /* Creates stacking context */
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 25px;
-    flex-wrap: wrap;
 }
 
-.christmas-img {
-    width: 180px;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.christmas-img:hover {
-    transform: scale(1.08) rotate(2deg);
-    box-shadow: 0 15px 30px rgba(255,255,255,0.4);
-}
-
-/* Snow Animation */
-
-/* 100% FIX — Hide bg-overlay ONLY while the Christmas banner is active */
-#christmas-banner {
-    position: relative;
-    z-index: 9999; 
-}
-
-#christmas-banner ~ .bg-overlay,
-.bg-overlay.christmas-hidden {
-    display: none !important;
-}
-.christmas-banner {
-    position: relative;
-    z-index: 5;
-}
-
-.christmas-banner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #d73f32 !important;
-    z-index: -1;
-}
-
-.christmas-banner * {
-    position: relative;
-    z-index: 10;
-}
-
-
-@keyframes snowfall {
-    0%   { background-position: 0 0, 0 0, 0 0; }
-    100% { background-position: 0 1000px, 0 700px, 0 500px; }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .christmas-content h2 {
-        font-size: 1.6rem;
-    }
-
-    .christmas-img {
-        width: 130px;
-        height: 160px;
-    }
-}
-.christmas-glow {
-    position: absolute;
-    top: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255,255,255,0.45), transparent 70%);
-    filter: blur(55px);
-    pointer-events: none;
-    z-index: 1;
-    animation: glowPulse 6s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-    50% { opacity: 0.9; transform: translateX(-50%) scale(1.2); }
-}
-.sparkle {
-    position: absolute;
-    font-size: 2rem;
-    color: #fff8dd;
-    opacity: 0;
-    animation: twinkle 4s infinite ease-in-out;
-    z-index: 10;
-}
-
-.sparkle-1 { top: 120px; left: 25%; animation-delay: 0s; }
-.sparkle-2 { top: 120px; right: 25%; animation-delay: 1.5s; }
-.sparkle-3 { top: 180px; left: 50%; animation-delay: 3s; }
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0; transform: scale(0.7); }
-    50% { opacity: 1; transform: scale(1.2); }
-}
-.ornament {
-    width: 60px;
-    position: absolute;
-    z-index: 5;
-    animation: sway 5s ease-in-out infinite;
-    opacity: 0.8;
-}
-
-.ornament-1 { top: 40px; left: 15%; animation-delay: 0s; }
-.ornament-2 { top: 10px; right: 20%; animation-delay: 1.2s; }
-.ornament-3 { top: 80px; right: 5%; animation-delay: 2.5s; }
-
-@keyframes sway {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(10px) rotate(4deg); }
-}
-.image-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 600px;
-    height: 300px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
-    filter: blur(50px);
-    z-index: 0;
-}
-
-
-
-/* Completely hide background overlay ONLY when inside Christmas banner */
-#christmas-banner {
-    position: relative;
-    isolation: isolate; /* NEW STACKING CONTEXT */
-    z-index: 1000;
-}
-
-/* Hide overlay when Christmas banner is visible */
+/* Force hide the site overlay when inside this banner */
 #christmas-banner .bg-overlay,
 .bg-overlay.christmas-hide {
     display: none !important;
 }
 
-/* Robust site-level snow overlay (outside banner stacking context) */
-
-
-/* two layered repeating snow textures */
-
-
-
-/* Force remove overlay when Christmas banner is visible */
-.bg-overlay {
-    display: none !important;
+/* --- THE FROSTED GLASS CARD (The Key Visual Upgrade) --- */
+.christmas-content {
+    background: rgba(255, 255, 255, 0.08); /* Very transparent white */
+    backdrop-filter: blur(12px); /* The Blur Effect */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Thin icy border */
+    border-radius: 20px;
+    padding: 50px;
+    max-width: 800px;
+    text-align: center;
+    position: relative;
+    z-index: 20; /* Sit above the snow/ornaments */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Deep shadow for lift */
+    margin-bottom: 50px;
 }
 
-#christmas-banner ~ .bg-overlay {
-    display: none !important;
+/* Elegant Script Font for Title */
+.christmas-content h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+    color: #FFD700; /* Gold */
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    line-height: 1.2;
 }
 
-.christmas-hide {
-    display: none !important;
+/* Classic Serif for Body */
+.christmas-content p {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+    line-height: 1.6;
 }
+
+/* --- GOLD METALLIC BUTTON --- */
+.christmas-cta {
+    display: inline-block;
+    padding: 16px 45px;
+    /* Metallic Gold Gradient */
+    background: linear-gradient(45deg, #cf9f41, #ffeeb8, #cf9f41);
+    background-size: 200% auto;
+    color: #3e0000; /* Dark red text for contrast */
+    border-radius: 50px;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 0 0 20px rgba(207, 159, 65, 0.4);
+    transition: all 0.5s ease;
+}
+
+.christmas-cta:hover {
+    background-position: right center; /* Moves the shine */
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+}
+
+/* --- PRODUCT IMAGE SHOWCASE --- */
+.christmas-images {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 20;
+}
+
+.christmas-img {
+    width: 200px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 15px;
+    /* Gold Border */
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.christmas-img:hover {
+    transform: translateY(-15px) scale(1.05) rotate(2deg);
+    border-color: #FFD700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+    z-index: 25;
+}
+
+/* --- DECORATIONS & PARTICLES --- */
+
+/* Magic Glow behind the content */
+.christmas-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 100, 100, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Ornaments styling */
+.ornament {
+    width: 70px; /* Slightly larger */
+    position: absolute;
+    z-index: 5;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); /* 3D shadow */
+    animation: sway 4s ease-in-out infinite alternate;
+}
+
+.ornament-1 { top: -20px; left: 10%; animation-duration: 4.5s; }
+.ornament-2 { top: -40px; right: 15%; width: 55px; animation-duration: 3.8s; }
+.ornament-3 { top: 60px; left: 85%; width: 45px; animation-duration: 5s; }
+
+@keyframes sway {
+    from { transform: rotate(-5deg); }
+    to { transform: rotate(5deg); }
+}
+
+/* Sparkles */
+.sparkle {
+    position: absolute;
+    color: #ffeeb8;
+    font-size: 24px;
+    z-index: 15;
+    animation: twinkle 3s infinite;
+}
+.sparkle-1 { top: 20%; left: 20%; animation-delay: 0s; }
+.sparkle-2 { top: 30%; right: 25%; animation-delay: 1.5s; }
+.sparkle-3 { top: 70%; left: 50%; animation-delay: 2s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); text-shadow: 0 0 10px white; }
+}
+
+/* Garland Lights */
 .garland {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    padding-top: 20px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    height: 50px; /* Give it space */
+    z-index: 15;
     pointer-events: none;
-    z-index: 50;
+    /* This spreads the lights across the full width */
+    display: flex;
+    justify-content: space-evenly; 
+    padding-top: 12px;
 }
-
+/* Add this under your .garland styles */
 .garland-string {
     position: absolute;
-    top: 12px;
+    top: 12px; /* Aligns with the bulb padding */
     left: 0;
     width: 100%;
     height: 2px;
-    border-bottom: 2px dashed rgba(255,255,255,0.5);
+    background: rgba(0, 0, 0, 0.2); /* Shadow */
+    border-bottom: 2px solid #2d5a27; /* Green wire color */
+    z-index: 14; /* Puts wire behind the bulbs */
 }
-
 .garland-bulb {
-    width: 12px;
-    height: 12px;
-    background: #ffe89c;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #FFD700;
     border-radius: 50%;
-    box-shadow: 0 0 12px #ffe89c;
-    animation: twinkle 2s infinite ease-in-out alternate;
+    margin: 0 30px;
+    box-shadow: 0 0 15px #FFD700;
+    animation: lightFlash 2s infinite alternate;
 }
 
-@keyframes twinkle {
-    0% { opacity: 0.4; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1.15); }
+@keyframes lightFlash {
+    from { opacity: 0.5; box-shadow: 0 0 5px #FFD700; }
+    to { opacity: 1; box-shadow: 0 0 20px #FFD700; }
 }
-.curtain-lights {
-    position: absolute;
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .christmas-content {
+        padding: 30px 20px;
+        margin-top: 20px;
+        background: rgba(100, 0, 0, 0.3); /* Slight red tint instead of white */
+    backdrop-filter: blur(15px); /* Stronger blur */
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    .christmas-content h2 {
+        font-size: 2.8rem;
+    }
+    .christmas-images {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 30;
+    margin-top: -40px; /* Pulls the images UP into the banner */
+}
+
+    }
+    .ornament { display: none; } /* Hide ornaments on mobile to save space */
+/* ❄️ CSS ONLY SNOW EFFECT ❄️ */
+
+/* The container (positioned by your JS) */
+#site-snow {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
-    z-index: 4; /* behind content but above bg */
-    pointer-events: none;
+    pointer-events: none; /* Allows you to click buttons underneath */
+    z-index: 9999; /* Sits on top of the banner */
 }
 
-.curtain-lights .strand {
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0) 0%,
-        rgba(255,220,140,0.7) 40%,
-        rgba(255,220,140,0.1) 100%
-    );
-    filter: blur(2px);
-    animation: glowStrand 3s ease-in-out infinite alternate;
-}
-
-@keyframes glowStrand {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.7; }
-}
-
-.ornament {
-    animation: swaySmooth 5s ease-in-out infinite;
-}
-
-@keyframes swaySmooth {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(6px) rotate(3deg); }
-}
-.christmas-img {
-    animation: candleFlicker 4s infinite ease-in-out;
-}
-
-@keyframes candleFlicker {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.15); }
-}
-.christmas-banner::after {
-    content: "";
+.layer {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(
-        circle,
-        rgba(255,255,255,0) 40%,
-        rgba(0,0,0,0.25) 100%
-    );
-    z-index: 5;
+    width: 100%;
+    height: 100%;
+}
+
+/* Layer 1: Small, fast snow */
+.layer--small {
+    /* Creates white dots using CSS - no image needed! */
+    background-image: 
+        radial-gradient(circle, #fff 1.5px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1.5px);
+    background-size: 100px 100px;
+    background-position: 0 0, 20px 40px;
+    animation: snowFall 3s linear infinite;
+    opacity: 0.8;
+}
+
+/* Layer 2: Big, slow fluffy snow */
+.layer--big {
+    background-image: 
+        radial-gradient(circle, #fff 3px, transparent 3.5px),
+        radial-gradient(circle, rgba(255,255,255,0.6) 2.5px, transparent 3px);
+    background-size: 200px 200px;
+    background-position: 0 0, 40px 80px;
+    animation: snowFall 6s linear infinite;
+    opacity: 0.9;
+}
+
+/* The falling animation */
+@keyframes snowFall {
+    from {
+        background-position: 0 0, 0 0;
+    }
+    to {
+        background-position: 0 200px, 0 200px; /* Moves down exactly 1 pattern loop */
+    }
+}
+.snow-drift {
+    position: absolute;
+    bottom: -1px; /* Overlap slightly to prevent gaps */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 20;
+    transform: rotate(180deg); /* Flips it to look like a pile of snow */
+}
+
+.snow-drift svg {
+    position: relative;
+    display: block;
+    width: calc(150% + 1.3px);
+    height: 60px;
+    fill: #e2dad2; /* MATCH THIS color to your Featured section background */
+}
+
+/* On mobile, make the snow pile smaller */
+@media (max-width: 768px) {
+    .snow-drift svg {
+        height: 30px;
+    }
+}
+/* Initial State: Hidden and slightly down */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUpCustom 0.8s ease-out forwards;
+}
+
+/* Delays */
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+
+/* The Animation */
+@keyframes fadeInUpCustom {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🌟 Fix congestion in Christmas banner */
+#christmas-banner .banner-box {
+    padding: 40px 20px !important;   /* More breathing room */
+    margin-bottom: 30px !important;  /* Push content down */
+}
+
+/* Title spacing */
+#christmas-banner h2 {
+    margin-bottom: 15px !important;
+    line-height: 1.3 !important;
+}
+
+/* Subtitle spacing */
+#christmas-banner p {
+    margin-bottom: 25px !important;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+/* Button spacing & sizing */
+#christmas-banner .cta-button {
+    padding: 18px 25px !important;
+    margin-top: 15px !important;
+    margin-bottom: 10px;
+    font-size: 1rem !important;
+}
+
+/* Reduce snow density */
+#christmas-banner .snow {
+    opacity: 0.45 !important;
+    transform: scale(0.85);
+}
+
+/* Fix for mobile only */
+@media (max-width: 600px) {
+
+    #christmas-banner .banner-box {
+        padding: 35px 18px !important;
+        margin-bottom: 25px !important;
+    }
+
+    #christmas-banner h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 10px !important;
+    }
+
+    #christmas-banner p {
+        font-size: 0.95rem;
+        margin-bottom: 20px !important;
+    }
+
+    #christmas-banner .cta-button {
+        font-size: 0.85rem !important;
+        padding: 14px 20px !important;
+        border-radius: 20px !important;
+    }
+
+    /* Make snow extremely subtle on phone */
+    #christmas-banner .snow {
+        opacity: 0.25 !important;
+        transform: scale(0.7);
+    }
 }
